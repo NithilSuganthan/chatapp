@@ -7,7 +7,7 @@ import { Message } from './types';
 // want server integration, move the real SDK usage to a server endpoint and
 // call it via `fetch` from the client.
 
-export const getGeminiResponse = async (history: Message[]) => {
+export nconst getGeminiResponse = async (history: Message[]) => {
   const last = history[history.length - 1];
 
   // Very small heuristic to produce a friendly reply for the demo.

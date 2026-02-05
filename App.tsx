@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ChatInterface } from './Components/ChatInterface.tsx';
-import { ValentineSurprise } from './components/ValentineSurprise';
+import { ChatInterface } from './Components/ChatInterface';
+import { ValentineSurprise } from './Components/ValentineSurprise';
 
 const App: React.FC = () => {
   const [showSurprise, setShowSurprise] = useState(false);

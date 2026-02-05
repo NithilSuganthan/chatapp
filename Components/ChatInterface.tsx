@@ -1,11 +1,30 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Message } from '../types';
-import { getGeminiResponse } from '../geminiService';
 
 interface ChatInterfaceProps {
   onTimeUp: () => void;
 }
+
+// Local mock responses
+const getMockResponse = (history: Message[]) => {
+  const last = history[history.length - 1];
+
+  if (!last) return "Hello! What would you like to talk about?";
+
+  const userText = last.text.toLowerCase();
+  if (userText.includes('hi') || userText.includes('hello')) {
+    return "Hey there! Great to hear from you — how's your day going?";
+  }
+  if (userText.includes('love') || userText.includes('valentine')) {
+    return "Aww, love is in the air 💖 — tell me more!";
+  }
+  if (userText.endsWith('?')) {
+    return "That's a great question — I'm thinking... here's a quick answer: let's try something fun together!";
+  }
+
+  return `I heard you: "${last.text}" — care to elaborate?`;
+};
 
 export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onTimeUp }) => {
   const [messages, setMessages] = useState<Message[]>([
@@ -39,7 +58,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onTimeUp }) => {
     setIsLoading(true);
 
     try {
-      const response = await getGeminiResponse(newMessages);
+      const response = await Promise.resolve(getMockResponse(newMessages));
       setMessages(prev => [...prev, { role: 'model', text: response }]);
     } catch (error) {
       console.error("Chat error:", error);
